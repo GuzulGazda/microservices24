@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@SuppressWarnings("unused")
 @RequestMapping("/api/v1/customer")
 @RequiredArgsConstructor
 public class CustomerController {

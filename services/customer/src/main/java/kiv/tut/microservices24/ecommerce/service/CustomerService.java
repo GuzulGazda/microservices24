@@ -65,7 +65,7 @@ public class CustomerService {
     public CustomerResponse getById(String customerId) {
         return repository.findById(customerId).map(mapper::fromCustomer)
                 .orElseThrow(() -> new CustomerNotFoundException(
-                        format("Cannot update customer: no customer found with the provided id:: %s", customerId)
+                        format("No customer found with the provided id:: %s", customerId)
                 ));
     }
 
