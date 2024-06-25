@@ -24,6 +24,8 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class ProductService {
 
+    public static final String DOES_NOT_EXISTS_IN_THE_STORE = "One or more products does not exists in the store.";
+    public static final String NO_PRODUCT_FOUND_WITH_THE_PROVIDED_ID_S = "No product found with the provided id:: %s";
     private final ProductRepository repository;
     private final ProductMapper mapper;
 
@@ -48,7 +50,7 @@ public class ProductService {
         var storeProducts = repository.findAllByIdInOrderById(productIds);
 
         if (productIds.size() != storeProducts.size()) {
-            throw new ProductPurchaseException("One or more products does not exists in the store.");
+            throw new ProductPurchaseException(DOES_NOT_EXISTS_IN_THE_STORE);
         }
 
         var sortedRequest = request
@@ -78,9 +80,10 @@ public class ProductService {
     }
 
     public ProductResponse findById(Integer productId) {
-        return repository.findById(productId).map(mapper::toProductResponse)
+        return repository.findById(productId)
+                .map(mapper::toProductResponse)
                 .orElseThrow(() -> new ProductNotFoundException(
-                        format("No product found with the provided id:: %s", productId)
+                        format(NO_PRODUCT_FOUND_WITH_THE_PROVIDED_ID_S, productId)
                 ));
     }
 }
