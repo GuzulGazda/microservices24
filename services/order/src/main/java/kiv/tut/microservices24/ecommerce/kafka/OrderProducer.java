@@ -18,11 +18,12 @@ public class OrderProducer {
     private final KafkaTemplate<String, OrderConfirmation> kafkaTemplate;
 
     public void sendOrderConfirmation(OrderConfirmation orderConfirmation) {
-        log.info("IHOR:: Sending Order confirmation");
+        log.info("IHOR:: Sending order confirmation");
         Message<OrderConfirmation> message = MessageBuilder
                 .withPayload(orderConfirmation)
                 .setHeader(TOPIC, "order-topic")
                 .build();
+
         kafkaTemplate.send(message);
     }
 }
