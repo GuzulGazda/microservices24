@@ -1,9 +1,7 @@
-server:
-  port: 8070
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/order
+    url: jdbc:postgresql://localhost:5432/payment
     username: alibou
     password: alibou
   jpa:
@@ -17,10 +15,6 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.type.mapping: orderConfirmation:kiv.tut.microservices24.ecommerce.model.OrderConfirmation
-
-application:
-  config:
-    customer-url: http://localhost:8098/api/v1/customer
-    payment-url: http://localhost:8060/api/v1/payment
-    product-url: http://localhost:8050/api/v1/product
+        spring.json.type.mapping: paymentNotificationRequest:kiv.tut.microservices24.ecommerce.dto.PaymentNotificationRequest
+server:
+  port: 8060
