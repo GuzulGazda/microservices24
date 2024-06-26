@@ -1,6 +1,7 @@
-package kiv.tut.microservices24.ecommerce.handler;
+package kiv.tut.microservices24.ecommerce.exception.handler;
 
-import kiv.tut.microservices24.ecommerce.exception.BusinessException;
+import kiv.tut.microservices24.ecommerce.exception.BusinessExceptionNotFound;
+import kiv.tut.microservices24.ecommerce.exception.BusinessExceptionWrongPurchase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,13 +17,19 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @SuppressWarnings("unused")
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<String> hadle(BusinessException exception) {
+    @ExceptionHandler(BusinessExceptionNotFound.class)
+    public ResponseEntity<String> hadle(BusinessExceptionNotFound exception) {
         return ResponseEntity
                 .status(NOT_FOUND)
                 .body(exception.getMsg());
     }
 
+    @ExceptionHandler(BusinessExceptionWrongPurchase.class)
+    public ResponseEntity<String> hadle(BusinessExceptionWrongPurchase exception) {
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(exception.getMsg());
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> hadle(MethodArgumentNotValidException exception) {

@@ -1,12 +1,12 @@
 package kiv.tut.microservices24.ecommerce.handler;
 
 import kiv.tut.microservices24.ecommerce.exception.ProductNotFoundException;
-import kiv.tut.microservices24.ecommerce.exception.ProductPurchaseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.RestClientException;
 
 import java.util.HashMap;
 
@@ -24,8 +24,8 @@ public class GlobalExceptionHandler {
                 .body(exception.getMessage());
     }
 
-    @ExceptionHandler(ProductPurchaseException.class)
-    public ResponseEntity<String> hadle(ProductPurchaseException exception) {
+    @ExceptionHandler(RestClientException.class)
+    public ResponseEntity<String> hadle(RestClientException exception) {
         return ResponseEntity
                 .status(BAD_REQUEST)
                 .body(exception.getMessage());
@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
         var errors = new HashMap<String, String>();
         exception.getBindingResult().getAllErrors()
                 .forEach(error -> {
-                    var fieldName = ((FieldError)error).getField();
+                    var fieldName = ((FieldError) error).getField();
                     var errorMessage = error.getDefaultMessage();
                     errors.put(fieldName, errorMessage);
                 });

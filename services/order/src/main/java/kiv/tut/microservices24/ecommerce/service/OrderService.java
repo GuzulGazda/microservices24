@@ -4,7 +4,7 @@ import kiv.tut.microservices24.ecommerce.customer.CustomerClient;
 import kiv.tut.microservices24.ecommerce.customer.CustomerResponse;
 import kiv.tut.microservices24.ecommerce.dto.OrderLineRequest;
 import kiv.tut.microservices24.ecommerce.dto.OrderRequest;
-import kiv.tut.microservices24.ecommerce.exception.BusinessException;
+import kiv.tut.microservices24.ecommerce.exception.BusinessExceptionNotFound;
 import kiv.tut.microservices24.ecommerce.kafka.OrderProducer;
 import kiv.tut.microservices24.ecommerce.model.Order;
 import kiv.tut.microservices24.ecommerce.model.OrderConfirmation;
@@ -77,7 +77,7 @@ public class OrderService {
         //TODO if no customer with this id - throw Business exception!
         AtomicReference<CustomerResponse> customerResponseAtomicReference =
                 new AtomicReference<>(this.customerClient.getById(customerId)
-                        .orElseThrow(() -> new BusinessException(
+                        .orElseThrow(() -> new BusinessExceptionNotFound(
                                 format(NO_CUSTOMER_EXISTS_WITH_THE_PROVIDED_ID_S, customerId)
                         )));
         log.info("IHOR:: Order Service successfully get the customer. FirstName:: " + customerResponseAtomicReference.get().firstName());
@@ -111,7 +111,7 @@ public class OrderService {
     public OrderResponse findById(Integer orderId) {
         return repository.findById(orderId)
                 .map(mapper::toOrderResponse)
-                .orElseThrow(() -> new BusinessException(
+                .orElseThrow(() -> new BusinessExceptionNotFound(
                         format(NO_ORDER_EXISTS_WITH_THE_PROVIDED_ID_D, orderId)
                 ));
     }
