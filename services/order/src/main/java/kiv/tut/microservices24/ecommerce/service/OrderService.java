@@ -10,6 +10,8 @@ import kiv.tut.microservices24.ecommerce.model.Order;
 import kiv.tut.microservices24.ecommerce.model.OrderConfirmation;
 import kiv.tut.microservices24.ecommerce.model.OrderMapper;
 import kiv.tut.microservices24.ecommerce.model.OrderResponse;
+import kiv.tut.microservices24.ecommerce.payment.PaymentClient;
+import kiv.tut.microservices24.ecommerce.payment.PaymentRequest;
 import kiv.tut.microservices24.ecommerce.product.ProductClient;
 import kiv.tut.microservices24.ecommerce.product.ProductPurchaseRequest;
 import kiv.tut.microservices24.ecommerce.product.ProductPurchaseResponse;
@@ -42,6 +44,7 @@ public class OrderService {
     private final OrderLineService orderLineService;
     private final OrderMapper mapper;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     @Transactional
     public Integer createOrder(OrderRequest request) {
@@ -57,7 +60,14 @@ public class OrderService {
         // persist order-lines
         List<Integer> orderLineIds = persistOrderLines(request, order);
 
-        // TODO: start the payment process
+        // start the payment process
+        paymentClient.requestOrderPayment(new PaymentRequest(
+                request.amount(),
+                request.paymentMethod(),
+                order.getId(),
+                order.getReference(),
+                customerResponse
+        ));
 
         // send the order confirmation notification (notification microservice)
         orderProducer.sendOrderConfirmation(
