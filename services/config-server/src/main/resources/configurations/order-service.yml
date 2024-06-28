@@ -1,6 +1,8 @@
 server:
   port: 8070
 spring:
+  application:
+    name: order-service
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/order
@@ -8,7 +10,7 @@ spring:
     password: alibou
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   kafka:
@@ -21,6 +23,6 @@ spring:
 
 application:
   config:
-    customer-url: http://localhost:8098/api/v1/customer
-    payment-url: http://localhost:8060/api/v1/payment
-    product-url: http://localhost:8050/api/v1/product
+    customer-url: http://localhost:8222/api/v1/customer
+    payment-url: http://localhost:8222/api/v1/payment
+    product-url: http://localhost:8222/api/v1/product
