@@ -1,7 +1,7 @@
 package kiv.tut.microservices24.ecommerce.model;
 
 import kiv.tut.microservices24.ecommerce.dto.OrderConfirmation;
-import kiv.tut.microservices24.ecommerce.dto.PaymentConfirmation;
+import kiv.tut.microservices24.ecommerce.dto.PaymentNotificationRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,5 +22,5 @@ public class Notification {
     private NotificationType type;
     private LocalDateTime dateTime;
     private OrderConfirmation orderConfirmation;
-    private PaymentConfirmation paymentConfirmation;
+    private PaymentNotificationRequest paymentConfirmation;
 }

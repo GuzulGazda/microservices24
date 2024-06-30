@@ -10,7 +10,7 @@ public class ProductMapper {
         return Product.builder()
                 .name(request.name())
                 .description(request.description())
-                .availableQuantity(request.availableQuantity())
+                .quantity(request.quantity())
                 .price(request.price())
                 .category(Category.builder()
                         .id(request.categoryId())
@@ -25,7 +25,7 @@ public class ProductMapper {
                 product.getId(),
                 product.getName(),
                 product.getDescription(),
-                product.getAvailableQuantity(),
+                product.getQuantity(),
                 product.getPrice(),
                 product.getCategory().getId(),
                 product.getCategory().getName(),

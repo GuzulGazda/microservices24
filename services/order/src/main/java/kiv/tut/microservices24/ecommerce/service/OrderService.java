@@ -70,16 +70,25 @@ public class OrderService {
         ));
 
         // send the order confirmation notification (notification microservice)
-        orderProducer.sendOrderConfirmation(
-                new OrderConfirmation(
-                        request.reference(),
-                        request.amount(),
-                        request.paymentMethod(),
-                        customerResponse,
-                        productPurchaseResponses
-                )
-        );
+        OrderConfirmation orderConfirmation = getOrderConfirmation(request, customerResponse, productPurchaseResponses);
+        log.info(String.format("IHOR ORDER: Order service send OrderConfirmation: %s", orderConfirmation));
+
+        orderProducer.sendOrderConfirmation(orderConfirmation);
         return order.getId();
+    }
+
+    private static OrderConfirmation getOrderConfirmation(
+            OrderRequest request,
+            CustomerResponse customerResponse,
+            List<ProductPurchaseResponse> productPurchaseResponses
+    ) {
+        return new OrderConfirmation(
+                request.reference(),
+                request.amount(),
+                request.paymentMethod(),
+                customerResponse,
+                productPurchaseResponses
+        );
     }
 
     private CustomerResponse getCustomerResponse(String customerId) {

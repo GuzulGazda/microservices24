@@ -38,9 +38,6 @@ public class EmailService {
             BigDecimal amount,
             String orderReference
     ) {
-
-        // set destination to my email
-        destination = EMAIL_FROM;
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
             MimeMessageHelper messageHelper =
@@ -78,9 +75,6 @@ public class EmailService {
             String orderReference,
             List<Product> products
     ) {
-
-        // set destination to my email
-        destination = EMAIL_FROM;
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
             MimeMessageHelper messageHelper =

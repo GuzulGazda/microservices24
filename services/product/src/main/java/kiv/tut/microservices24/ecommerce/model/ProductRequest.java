@@ -10,8 +10,8 @@ public record ProductRequest(
     String name,
     @NotNull(message = "Product description is required")
     String description,
-    @Positive(message = "Available quantity should be positive")
-    Double availableQuantity,
+    @Positive(message = "Quantity should be positive")
+    Double quantity,
     @Positive(message = "Price should be positive")
     BigDecimal price,
     @NotNull(message = "Product category is required")

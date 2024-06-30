@@ -1,7 +1,7 @@
 package kiv.tut.microservices24.ecommerce.kafka;
 
 import kiv.tut.microservices24.ecommerce.dto.OrderConfirmation;
-import kiv.tut.microservices24.ecommerce.dto.PaymentConfirmation;
+import kiv.tut.microservices24.ecommerce.dto.PaymentNotificationRequest;
 import kiv.tut.microservices24.ecommerce.email.EmailService;
 import kiv.tut.microservices24.ecommerce.model.Notification;
 import kiv.tut.microservices24.ecommerce.repository.NotificationRepository;
@@ -25,7 +25,7 @@ public class NotificationConsumer {
     private final EmailService emailService;
 
     @KafkaListener(topics = "payment-topic")
-    public void consumePaymentSuccessNotification(PaymentConfirmation paymentConfirmation) {
+    public void consumePaymentSuccessNotification(PaymentNotificationRequest paymentConfirmation) {
         log.info(String.format("IHOR:: Consuming the message from Payment Topic %s", paymentConfirmation));
         // store notification to the mongoDB
         repository.save(
@@ -47,7 +47,7 @@ public class NotificationConsumer {
     @KafkaListener(topics = "order-topic")
     // store notification to the mongoDB
     public void consumeOrderNotification(OrderConfirmation orderConfirmation) {
-        log.info(String.format("IHOR:: Consuming the message from Payment Topic %s", orderConfirmation));
+        log.info(String.format("IHOR:: Consuming the message from Order Topic %s", orderConfirmation));
         repository.save(
                 Notification.builder()
                         .type(ORDER_CONFIRMATION)

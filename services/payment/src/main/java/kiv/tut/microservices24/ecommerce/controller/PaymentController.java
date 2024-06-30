@@ -23,7 +23,7 @@ public class PaymentController {
     @PostMapping
     public ResponseEntity<Integer> createPayment(
             @RequestBody @Valid PaymentRequest request) {
-        log.info("IHOR:: CreatePayment: ");
+        log.info("IHOR:: CreatePayment: {}", request);
         return ResponseEntity.ok(service.createPayment(request));
     }
 }
